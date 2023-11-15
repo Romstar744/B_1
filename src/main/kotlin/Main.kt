@@ -1,7 +1,19 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import kotlinx.coroutines.*
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main() = runBlocking {
+    val job1 = launch { soundAlarm("click", 5) }
+    val job2 = launch { soundAlarm("chick", 7) }
+    val job3 = launch { soundAlarm("tick", 10) }
+
+    job1.join()
+    job2.join()
+    job3.join()
+}
+
+suspend fun soundAlarm(sound: String, seconds: Int) {
+    repeat(seconds) {
+        print("$sound ")
+        delay(1000)
+    }
+    println("= BOOM")
 }
